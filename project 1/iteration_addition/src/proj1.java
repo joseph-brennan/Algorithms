@@ -68,13 +68,15 @@ public class proj1 {
             return;
         }
   
-        for (int i = start; i > 0; i--) {
+        for (int i = Math.min(n, start); i > 0; i--) {
         	answer.add(i);
         	
         	int sum = 0;
         	
         	for (int j = 0; j < answer.size(); j++) {
-        		sum += answer.get(j);
+        		if (!(sum == start) || (sum + answer.get(j) <= start)) {
+        			sum += answer.get(j);
+        		}
         		
         	}
         	
