@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,13 +8,15 @@ import java.util.Scanner;
  *
  */
 public class proj1 {
-
+	static List<ArrayList<Integer>> results;// = new ArrayList<ArrayList<Integer>>();
+	
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 
 		int n = 0;
 
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<Integer> answer = new ArrayList<Integer>();
+		results = new ArrayList<ArrayList<Integer>>();
 		
 		//No command input ask for input
 		if (args.length == 0) {
@@ -48,62 +51,53 @@ public class proj1 {
 			System.exit(1);
 		}
 
-		result = algorithm(n, n, 0, result);
+		partition(n, n, answer);
 
-		printer(result);
+		printer();
 
 	}
 	
-	/**
-	 * Algorithm method first attempt using recursion.
-	 * @param start - input value from user
-	 * @param half_count - should only need to check half the numbers to get complete result list
-	 * @param count - starts at zero and is used for the other half
-	 * @param result - Array list of results
-	 * @return - returns the result or null if failure
-	 */
-	public static ArrayList<String> algorithm(int start, int half_count, int count, ArrayList<String> result) {
-		String solution = "";
+    @SuppressWarnings("unchecked")
+	public static void partition(int n, int start, ArrayList<Integer> answer) {
+        if (n == 0) {
+            //System.out.println("hi " + answer);
+           
+            results.add((ArrayList<Integer>)answer.clone());
+            //System.out.println("Bye: " + results);
+            answer.clear();
+            return;
+        }
+  
+        for (int i = start; i > 0; i--) {
+        	answer.add(i);
+        	
+        	int sum = 0;
+        	
+        	for (int j = 0; j < answer.size(); j++) {
+        		sum += answer.get(j);
+        		
+        	}
+        	
+            partition(n - i, i, answer);
+        }
+        //System.out.println("LOL: " + results);
+    }
 
-		if (half_count == start / 2) {
-
-			return result;
-
-		} else if (half_count == start) {
-			solution = Integer.toString(start) + " + " + Integer.toString(count);
-
-			result.add(solution);
-
-			algorithm(start, half_count--, count++, result);
-			
-		}else {
-			if (half_count + count == start) {
-				solution = Integer.toString(half_count) + " + " + Integer.toString(count);
-			
-			} else if () {
-				
-			}
-			
-			algorithm(start, half_count--, count++, result);
-		}
-
-		return null;
-	}
-	
 	/**
 	 * clean printer method
 	 * @param result - the gathered result list from the provided input
 	 */
-	public static void printer(ArrayList<String> result) {
+	public static void printer() {
 		int length = 0;
 
-		length = result.size();
+		length = results.size();
 
 		System.out.println("the results are:");
 
 		for (int i = 0; i < length; i++) {
+			System.out.print(i + ". ");
 
-			System.out.println(result.get(i));
+			System.out.println(results.get(i));
 		}
 
 	}
