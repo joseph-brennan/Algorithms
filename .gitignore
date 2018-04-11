@@ -1,0 +1,15 @@
+# writing myself
+
+# don't need the python build files
+**/.idea/
+
+# log files
+*.log
+
+# class files
+*.class
+*.tex
+*.xlsx
+
+# vim meta
+*.un~
